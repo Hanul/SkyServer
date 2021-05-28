@@ -1,10 +1,7 @@
 export interface SocketServerOptions {
     port: number;
 }
-
 export default class SocketServer {
-
-    constructor() {
-        
-    }
+    constructor();
 }
+//# sourceMappingURL=SocketServer.d.ts.map
