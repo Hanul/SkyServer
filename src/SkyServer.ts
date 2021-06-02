@@ -1,3 +1,8 @@
+import AbstractSocketClient from "./AbstractSocketClient";
+import WebRequest from "./WebRequest";
+import WebResponse from "./WebResponse";
+import WebServer from "./WebServer";
+
 export interface SkyServerOptions {
     socketPort?: number;
 
@@ -9,7 +14,17 @@ export interface SkyServerOptions {
 
 export default class SkyServer {
 
-    constructor() {
+    private webServer: WebServer | undefined;
+
+    constructor(
+        options: SkyServerOptions,
+        socketHandler: (client: AbstractSocketClient) => void,
+        webHandler?: (webRequest: WebRequest, webResponse: WebResponse) => void,
+    ) {
+
+    }
+
+    public delete() {
 
     }
 }
