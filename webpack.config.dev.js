@@ -2,8 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        'image-test': './test-src/image-test.ts',
-        'sound-test': './test-src/sound-test.ts',
+        'test': './test-src/test.ts',
     },
     module: {
         rules: [

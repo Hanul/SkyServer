@@ -1,6 +1,6 @@
 {
     "name": "skyserver",
-    "author": "Young Jae Sim",
+    "author": "Sim Young Jae",
     "homepage": "https://github.com/Hanul/skyserver",
     "version": "0.0.1-alpha-0",
     "types": "./lib/index.d.ts",
