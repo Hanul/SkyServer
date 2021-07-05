@@ -1,53 +1,64 @@
 import * as HTTP from "http";
 import * as HTTPS from "https";
 import * as Path from "path";
+import SkyFiles from "skyfiles";
 import SkyLog from "skylog";
+import CONTENT_TYPES from "./CONTENT_TYPES.json";
+import ENCODINGS from "./ENCODINGS.json";
 import WebRequest from "./WebRequest";
 import WebResponse from "./WebResponse";
 
 export interface WebServerOptions {
     port: number;
     httpPort?: number;
-    key: string | Buffer;
-    cert: string | Buffer;
+    key: string;
+    cert: string;
 }
 
 export default class WebServer {
 
-    public static readonly CONTENT_TYPES: { [extension: string]: string } = require("./CONTENT_TYPES.json");
-    public static readonly ENCODINGS: { [contentType: string]: BufferEncoding } = require("./ENCODINGS.json");
-
     public static contentTypeFromPath(path: string): string {
         const extension = Path.extname(path).substring(1);
-        const contentType = this.CONTENT_TYPES[extension];
+        const contentType = (CONTENT_TYPES as any)[extension];
         return contentType === undefined ? "application/octet-stream" : contentType;
     }
 
     public static encodingFromContentType(contentType: string): BufferEncoding {
-        const encoding = this.ENCODINGS[contentType];
+        const encoding = (ENCODINGS as any)[contentType];
         return encoding === undefined ? "binary" : encoding;
     }
 
-    public httpsServer: HTTPS.Server;
+    public httpsServer: HTTPS.Server | undefined;
 
-    constructor(options: WebServerOptions, handler: (webRequest: WebRequest, webResponse: WebResponse) => void) {
+    constructor(
+        private options: WebServerOptions,
+        private handler: (webRequest: WebRequest, webResponse: WebResponse) => void,
+    ) {
+        this.load();
+    }
 
-        this.httpsServer = HTTPS.createServer({ key: options.key, cert: options.cert }, async (req, res) => {
-            //TODO:
-        }).listen(options.port);
+    private async load() {
+
+        const key = await SkyFiles.readBuffer(this.options.key);
+        const cert = await SkyFiles.readBuffer(this.options.cert);
+
+        this.httpsServer = HTTPS.createServer({ key, cert }, async (req, res) => {
+            const webRequest = new WebRequest(req);
+            this.handler(webRequest, new WebResponse(webRequest, res));
+        }).listen(this.options.port);
 
         this.httpsServer.on("error", (error) => {
-            SkyLog.error(error, options);
+            SkyLog.error(error, this.options);
         });
 
         // http -> https redirect
         HTTP.createServer((req, res) => {
             res.writeHead(302, {
-                Location: `https://${req.headers.host}${options.port === 443 ? "" : `:${options.port}`}${req.url}`,
+                Location: `https://${req.headers.host}${this.options.port === 443 ? "" : `:${this.options.port}`}${req.url}`,
             });
             res.end();
-        }).listen(options.httpPort);
+        }).listen(this.options.httpPort);
 
-        SkyLog.success(`web server running... https://localhost:${options.port}`);
+        SkyLog.success(`web server running... https://localhost:${this.options.port}`);
     }
 }

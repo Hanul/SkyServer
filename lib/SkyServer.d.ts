@@ -1,4 +1,7 @@
 /// <reference types="node" />
+import AbstractSocketClient from "./AbstractSocketClient";
+import WebRequest from "./WebRequest";
+import WebResponse from "./WebResponse";
 export interface SkyServerOptions {
     socketPort?: number;
     webPort?: number;
@@ -7,6 +10,8 @@ export interface SkyServerOptions {
     cert?: string | Buffer;
 }
 export default class SkyServer {
-    constructor();
+    private webServer;
+    constructor(options: SkyServerOptions, socketHandler: (client: AbstractSocketClient) => void, webHandler?: (webRequest: WebRequest, webResponse: WebResponse) => void);
+    delete(): void;
 }
 //# sourceMappingURL=SkyServer.d.ts.map

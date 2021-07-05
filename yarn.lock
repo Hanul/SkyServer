@@ -70,6 +70,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.6.1.tgz#32d43390d5c62c5b6ec486a9bc9c59544de39a08"
   integrity sha512-7EIraBEyRHEe7CH+Fm1XvgqU6uwZN8Q7jppJGcqjROMT29qhAuuOxYB1uEY5UMYQKEmA5D+5tBnhdaPXSsLONA==
 
+"@types/node@^15.14.0":
+  version "15.14.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.14.0.tgz#74dbf254fb375551a9d2a71faf6b9dbc2178dc53"
+  integrity sha512-um/+/ip3QZmwLfIkWZSNtQIJNVAqrJ92OkLMeuZrjZMTAJniI7fh8N8OICyDhAJ2mzgk/fmYFo72jRr5HyZ1EQ==
+
 "@types/ws@^7.4.4":
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/@types/ws/-/ws-7.4.4.tgz#93e1e00824c1de2608c30e6de4303ab3b4c0c9bc"
@@ -829,12 +834,29 @@ skydate@^0.0.1:
   resolved "https://registry.yarnpkg.com/skydate/-/skydate-0.0.1.tgz#8aa01b55e0a6e56f6ccecf9e3d8716c1b82e95e4"
   integrity sha512-GxRbK7MOmOa6CCU0ljLBhgfbQJAanx598tajbbgqGcX0vUiMWIp0omEFofH76lLe3+IcHFE3CBloEgBEY9eeQQ==
 
+skyfiles@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/skyfiles/-/skyfiles-0.0.1.tgz#890fa2093ddc70b3cedda02a9462155fdcc8e1cb"
+  integrity sha512-eI/UTnr8NXAdLQcYYaZRzWeCTzWRMTo2Zrlsjh2TuBYCIa57TWlm8gqjxXHm6woLUlw8YzwImZQhy0/WNDdfHQ==
+
 skylog@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/skylog/-/skylog-0.0.1.tgz#fe82356dc6446dcf03a2e09039f80eaddebed388"
   integrity sha512-G8vOey3WNQw9qSEAt1j/tEARXWVihvvwULpacHp1Vzl0ifVBXyeIytRn+hb/zx2ocee/PLCVtfj/iS557fOYLg==
   dependencies:
     skydate "^0.0.1"
+
+skyrouter@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/skyrouter/-/skyrouter-0.0.5.tgz#84f869e3109a841edee368b555a5ea0cbf0d5a74"
+  integrity sha512-PB7YaQAoa9mSaKQujQhbG40XatpAn4QWWk01lyAhiFzxPn9vDioawhB7N6MH5iOEXHl9QLgCQEn5sqUWvLkazA==
+  dependencies:
+    skyutil "^0.0.4"
+
+skyutil@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/skyutil/-/skyutil-0.0.4.tgz#f40448e0721143b4d2b513b2fdd35b73010890ac"
+  integrity sha512-k9az+T34R/LoYhDrsfkgcmYQmYbSiiV7Of1QLngkuBZIE6pxaSFdCoz9YoFgt/swwEbW+UnhsVtBic+uPXnS7A==
 
 slash@^3.0.0:
   version "3.0.0"

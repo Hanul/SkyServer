@@ -1,21 +1,20 @@
 /// <reference types="node" />
 import * as HTTPS from "https";
+import WebRequest from "./WebRequest";
+import WebResponse from "./WebResponse";
 export interface WebServerOptions {
     port: number;
     httpPort?: number;
-    key: string | Buffer;
-    cert: string | Buffer;
+    key: string;
+    cert: string;
 }
 export default class WebServer {
-    static readonly CONTENT_TYPES: {
-        [extension: string]: string;
-    };
-    static readonly ENCODINGS: {
-        [contentType: string]: BufferEncoding;
-    };
+    private options;
+    private handler;
     static contentTypeFromPath(path: string): string;
     static encodingFromContentType(contentType: string): BufferEncoding;
-    httpsServer: HTTPS.Server;
-    constructor(options: WebServerOptions);
+    httpsServer: HTTPS.Server | undefined;
+    constructor(options: WebServerOptions, handler: (webRequest: WebRequest, webResponse: WebResponse) => void);
+    private load;
 }
 //# sourceMappingURL=WebServer.d.ts.map

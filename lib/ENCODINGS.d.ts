@@ -1,1 +1,20 @@
-//# sourceMappingURL=ENCODINGS.d.ts.map
+declare const _exports: {
+    "application/javascript": string;
+    "text/javascript": string;
+    "application/json": string;
+    "application/wasm": string;
+    "text/css": string;
+    "text/plain": string;
+    "text/x-markdown": string;
+    "text/html": string;
+    "image/png": string;
+    "image/jpeg": string;
+    "image/gif": string;
+    "image/svg+xml": string;
+    "audio/mpeg": string;
+    "audio/ogg": string;
+    "video/ogv": string;
+    "video/mp4": string;
+    "video/webm": string;
+};
+export = _exports;

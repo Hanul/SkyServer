@@ -1,5 +1,6 @@
 import * as HTTP from "http";
 import * as Querystring from "querystring";
+import { URIParser, ViewParams } from "skyrouter";
 
 export default class WebRequest {
 
@@ -9,6 +10,8 @@ export default class WebRequest {
     public parameterString: string;
     public parameters: { [name: string]: any } = {};
     public uri: string;
+
+    private routed = false;
 
     constructor(public req: HTTP.IncomingMessage) {
 
@@ -59,6 +62,14 @@ export default class WebRequest {
             } else {
                 this.parameters[name] = queryParams[name];
             }
+        }
+    }
+
+    public route(pattern: string, handler: (viewParams: ViewParams) => void) {
+        const viewParams: ViewParams = {};
+        if (this.routed !== true && URIParser.parse(this.uri, pattern, viewParams) === true) {
+            handler(viewParams);
+            this.routed = true;
         }
     }
 
