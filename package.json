@@ -2,7 +2,7 @@
     "name": "skyserver",
     "author": "Sim Young Jae",
     "homepage": "https://github.com/Hanul/skyserver",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "types": "./lib/index.d.ts",
     "main": "./lib/index.js",
     "devDependencies": {

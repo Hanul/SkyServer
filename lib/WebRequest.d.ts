@@ -11,7 +11,6 @@ export default class WebRequest {
         [name: string]: any;
     };
     uri: string;
-    private routed;
     constructor(req: HTTP.IncomingMessage);
     parseParams(): void;
     route(pattern: string, handler: (viewParams: ViewParams) => void): void;

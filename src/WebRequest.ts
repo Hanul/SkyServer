@@ -11,8 +11,6 @@ export default class WebRequest {
     public parameters: { [name: string]: any } = {};
     public uri: string;
 
-    private routed = false;
-
     constructor(public req: HTTP.IncomingMessage) {
 
         this.headers = req.headers;
@@ -67,9 +65,8 @@ export default class WebRequest {
 
     public route(pattern: string, handler: (viewParams: ViewParams) => void) {
         const viewParams: ViewParams = {};
-        if (this.routed !== true && URIParser.parse(this.uri, pattern, viewParams) === true) {
+        if (URIParser.parse(this.uri, pattern, viewParams) === true) {
             handler(viewParams);
-            this.routed = true;
         }
     }
 

@@ -7,6 +7,7 @@ import WebRequest from "./WebRequest";
 export default class WebResponse {
 
     private acceptEncoding: string;
+    public responsed = false;
 
     constructor(private webRequest: WebRequest, private res: HTTP.ServerResponse) {
         const headers = webRequest.headers["accept-encoding"];
@@ -28,35 +29,39 @@ export default class WebResponse {
         encoding?: BufferEncoding,
         content?: string | Buffer,
     }) {
+        if (this.responsed !== true) {
 
-        if (contentType !== undefined) {
-            if (encoding === undefined) {
-                encoding = (ENCODINGS as any)[contentType];
-            }
-            headers["Content-Type"] = `${contentType}; charset=${encoding}`;
-        }
-
-        if (content === undefined) { content = ""; }
-        if (statusCode === undefined) { statusCode = 200; }
-        if (encoding === undefined) { encoding = "utf-8"; }
-
-        if (encoding === "utf-8" && typeof this.acceptEncoding === "string" && this.acceptEncoding.match(/\bgzip\b/) !== null) {
-
-            // when gzip encoding
-            headers["Content-Encoding"] = "gzip";
-
-            ZLib.gzip(content, (error, buffer) => {
-                if (error !== null) {
-                    SkyLog.error(error, this.webRequest);
-                } else {
-                    this.res.writeHead(statusCode!, headers);
-                    this.res.end(buffer, encoding!);
+            if (contentType !== undefined) {
+                if (encoding === undefined) {
+                    encoding = (ENCODINGS as any)[contentType];
                 }
-            });
+                headers["Content-Type"] = `${contentType}; charset=${encoding}`;
+            }
 
-        } else {
-            this.res.writeHead(statusCode, headers);
-            this.res.end(content, encoding);
+            if (content === undefined) { content = ""; }
+            if (statusCode === undefined) { statusCode = 200; }
+            if (encoding === undefined) { encoding = "utf-8"; }
+
+            if (encoding === "utf-8" && typeof this.acceptEncoding === "string" && this.acceptEncoding.match(/\bgzip\b/) !== null) {
+
+                // when gzip encoding
+                headers["Content-Encoding"] = "gzip";
+
+                ZLib.gzip(content, (error, buffer) => {
+                    if (error !== null) {
+                        SkyLog.error(error, this.webRequest);
+                    } else {
+                        this.res.writeHead(statusCode!, headers);
+                        this.res.end(buffer, encoding!);
+                    }
+                });
+
+            } else {
+                this.res.writeHead(statusCode, headers);
+                this.res.end(content, encoding);
+            }
+
+            this.responsed = true;
         }
     }
 }
