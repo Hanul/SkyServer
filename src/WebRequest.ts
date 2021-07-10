@@ -63,10 +63,10 @@ export default class WebRequest {
         }
     }
 
-    public route(pattern: string, handler: (viewParams: ViewParams) => void) {
+    public async route(pattern: string, handler: (viewParams: ViewParams) => Promise<void>) {
         const viewParams: ViewParams = {};
         if (URIParser.parse(this.uri, pattern, viewParams) === true) {
-            handler(viewParams);
+            await handler(viewParams);
         }
     }
 

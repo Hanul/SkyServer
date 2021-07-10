@@ -15,7 +15,7 @@ export default class WebServer {
     static contentTypeFromPath(path: string): string;
     static encodingFromContentType(contentType: string): BufferEncoding;
     httpsServer: HTTPS.Server | undefined;
-    constructor(options: WebServerOptions, handler: (webRequest: WebRequest, webResponse: WebResponse) => void, notFoundHandler?: ((webRequest: WebRequest, webResponse: WebResponse) => void) | undefined);
+    constructor(options: WebServerOptions, handler: (webRequest: WebRequest, webResponse: WebResponse) => Promise<void>, notFoundHandler?: ((webRequest: WebRequest, webResponse: WebResponse) => void) | undefined);
     private load;
 }
 //# sourceMappingURL=WebServer.d.ts.map

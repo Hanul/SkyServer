@@ -13,7 +13,7 @@ export default class WebRequest {
     uri: string;
     constructor(req: HTTP.IncomingMessage);
     parseParams(): void;
-    route(pattern: string, handler: (viewParams: ViewParams) => void): void;
+    route(pattern: string, handler: (viewParams: ViewParams) => Promise<void>): Promise<void>;
     toString: () => string;
 }
 //# sourceMappingURL=WebRequest.d.ts.map

@@ -32,7 +32,7 @@ export default class WebServer {
 
     constructor(
         private options: WebServerOptions,
-        private handler: (webRequest: WebRequest, webResponse: WebResponse) => void,
+        private handler: (webRequest: WebRequest, webResponse: WebResponse) => Promise<void>,
         private notFoundHandler?: (webRequest: WebRequest, webResponse: WebResponse) => void,
     ) {
         this.load();
@@ -48,7 +48,7 @@ export default class WebServer {
             const webRequest = new WebRequest(req);
             const webResponse = new WebResponse(webRequest, res);
 
-            this.handler(webRequest, webResponse);
+            await this.handler(webRequest, webResponse);
             if (webResponse.responsed !== true) {
                 //TODO: serve file.
                 if (this.notFoundHandler !== undefined && webResponse.responsed !== true) {
