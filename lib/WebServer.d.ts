@@ -7,6 +7,7 @@ export interface WebServerOptions {
     httpPort?: number;
     key: string;
     cert: string;
+    indexFilePath?: string;
 }
 export default class WebServer {
     private options;
@@ -16,6 +17,8 @@ export default class WebServer {
     static encodingFromContentType(contentType: string): BufferEncoding;
     httpsServer: HTTPS.Server | undefined;
     constructor(options: WebServerOptions, handler: (webRequest: WebRequest, webResponse: WebResponse) => Promise<void>, notFoundHandler?: ((webRequest: WebRequest, webResponse: WebResponse) => void) | undefined);
+    private responseStream;
+    private responseResource;
     private load;
 }
 //# sourceMappingURL=WebServer.d.ts.map

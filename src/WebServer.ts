@@ -13,6 +13,7 @@ export interface WebServerOptions {
     httpPort?: number;
     key: string;
     cert: string;
+    indexFilePath?: string;
 }
 
 export default class WebServer {
@@ -38,6 +39,29 @@ export default class WebServer {
         this.load();
     }
 
+    private responseStream(webRequest: WebRequest, webResponse: WebResponse) {
+        //TODO:
+    }
+
+    private async responseResource(webRequest: WebRequest, webResponse: WebResponse) {
+        if (webRequest.headers.range !== undefined) {
+            this.responseStream(webRequest, webResponse);
+        } else if (webRequest.method === "GET") {
+            try {
+                const contentType = WebServer.contentTypeFromPath(webRequest.uri);
+                const content = await SkyFiles.readBuffer(`${process.cwd()}/public/${webRequest.uri}`);
+                webResponse.response({ content, contentType });
+            } catch (error) {
+                try {
+                    const indexFileContent = await SkyFiles.readBuffer(`${process.cwd()}/public/${this.options.indexFilePath === undefined ? "index.html" : this.options.indexFilePath}`);
+                    webResponse.response({ content: indexFileContent, contentType: "text/html" });
+                } catch (error) {
+                    webResponse.response({ statusCode: 404 });
+                }
+            }
+        }
+    }
+
     private async load() {
 
         const key = await SkyFiles.readBuffer(this.options.key);
@@ -50,7 +74,7 @@ export default class WebServer {
 
             await this.handler(webRequest, webResponse);
             if (webResponse.responsed !== true) {
-                //TODO: serve file.
+                await this.responseResource(webRequest, webResponse);
                 if (this.notFoundHandler !== undefined && webResponse.responsed !== true) {
                     this.notFoundHandler(webRequest, webResponse);
                 }
