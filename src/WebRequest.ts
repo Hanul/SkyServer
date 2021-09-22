@@ -11,6 +11,8 @@ export default class WebRequest {
     public parameters: { [name: string]: any } = {};
     public uri: string;
 
+    public responsed = false;
+
     constructor(public req: HTTP.IncomingMessage) {
 
         this.headers = req.headers;
@@ -65,7 +67,7 @@ export default class WebRequest {
 
     public async route(pattern: string, handler: (viewParams: ViewParams) => Promise<void>) {
         const viewParams: ViewParams = {};
-        if (URIParser.parse(this.uri, pattern, viewParams) === true) {
+        if (this.responsed !== true && URIParser.parse(this.uri, pattern, viewParams) === true) {
             await handler(viewParams);
         }
     }

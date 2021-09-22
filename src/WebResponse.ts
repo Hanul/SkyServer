@@ -62,6 +62,7 @@ export default class WebResponse {
             }
 
             this.responsed = true;
+            this.webRequest.responsed = true;
         }
     }
 }

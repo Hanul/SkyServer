@@ -72,13 +72,25 @@ export default class WebServer {
             const webRequest = new WebRequest(req);
             const webResponse = new WebResponse(webRequest, res);
 
-            await this.handler(webRequest, webResponse);
-            if (webResponse.responsed !== true) {
-                await this.responseResource(webRequest, webResponse);
-                if (this.notFoundHandler !== undefined && webResponse.responsed !== true) {
-                    this.notFoundHandler(webRequest, webResponse);
+            if (webRequest.method === "OPTIONS") {
+                webResponse.response({
+                    headers: {
+                        "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
+            }
+
+            else {
+                await this.handler(webRequest, webResponse);
+                if (webResponse.responsed !== true) {
+                    await this.responseResource(webRequest, webResponse);
+                    if (this.notFoundHandler !== undefined && (webResponse.responsed as any) !== true) {
+                        this.notFoundHandler(webRequest, webResponse);
+                    }
                 }
             }
+
         }).listen(this.options.port);
 
         this.httpsServer.on("error", (error) => {

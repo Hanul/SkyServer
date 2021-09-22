@@ -6,4 +6,5 @@ export { default as WebServer, WebServerOptions } from "./WebServer";
 export { default as WebSocketClient } from "./WebSocketClient";
 export { default as WebSocketServer } from "./WebSocketServer";
 export { default as SkyServer, SkyServerOptions } from "./SkyServer";
+export { default as parseUpload } from "./upload/parseUpload";
 //# sourceMappingURL=index.d.ts.map

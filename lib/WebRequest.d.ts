@@ -11,6 +11,7 @@ export default class WebRequest {
         [name: string]: any;
     };
     uri: string;
+    responsed: boolean;
     constructor(req: HTTP.IncomingMessage);
     parseParams(): void;
     route(pattern: string, handler: (viewParams: ViewParams) => Promise<void>): Promise<void>;
