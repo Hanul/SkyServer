@@ -5,6 +5,7 @@ import WebResponse from "./WebResponse";
 export interface WebServerOptions {
     port: number;
     httpPort?: number;
+    httpToHttps?: boolean;
     key: string;
     cert: string;
     indexFilePath?: string;
@@ -19,6 +20,7 @@ export default class WebServer {
     constructor(options: WebServerOptions, handler: (webRequest: WebRequest, webResponse: WebResponse) => Promise<void>, notFoundHandler?: ((webRequest: WebRequest, webResponse: WebResponse) => void) | undefined);
     private responseStream;
     private responseResource;
+    private serve;
     private load;
 }
 //# sourceMappingURL=WebServer.d.ts.map

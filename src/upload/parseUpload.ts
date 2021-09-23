@@ -18,7 +18,7 @@ export default async (req: WebRequest) => {
                                 size: rf.size,
                                 name: rf.name,
                                 type: rf.type,
-                                modifiedTime: rf.lastModifiedDate,
+                                modifiedTime: rf.lastModifiedDate?.getTime(),
                             });
                         }
                     } else {
@@ -27,7 +27,7 @@ export default async (req: WebRequest) => {
                             size: rawFile.size,
                             name: rawFile.name,
                             type: rawFile.type,
-                            modifiedTime: rawFile.lastModifiedDate,
+                            modifiedTime: rawFile.lastModifiedDate?.getTime(),
                         });
                     }
                 }

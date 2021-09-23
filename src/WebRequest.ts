@@ -65,6 +65,14 @@ export default class WebRequest {
         }
     }
 
+    public async loadBody(): Promise<string> {
+        const buffers = [];
+        for await (const chunk of this.req) {
+            buffers.push(chunk);
+        }
+        return Buffer.concat(buffers).toString();
+    }
+
     public async route(pattern: string, handler: (viewParams: ViewParams) => Promise<void>) {
         const viewParams: ViewParams = {};
         if (this.responsed !== true && URIParser.parse(this.uri, pattern, viewParams) === true) {

@@ -9,8 +9,11 @@ import WebRequest from "./WebRequest";
 import WebResponse from "./WebResponse";
 
 export interface WebServerOptions {
+
     port: number;
     httpPort?: number;
+    httpToHttps?: boolean;
+
     key: string;
     cert: string;
     indexFilePath?: string;
@@ -62,48 +65,54 @@ export default class WebServer {
         }
     }
 
+    private async serve(req: HTTP.IncomingMessage, res: HTTP.ServerResponse) {
+
+        const webRequest = new WebRequest(req);
+        const webResponse = new WebResponse(webRequest, res);
+
+        if (webRequest.method === "OPTIONS") {
+            webResponse.response({
+                headers: {
+                    "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
+                    "Access-Control-Allow-Origin": "*",
+                },
+            });
+        }
+
+        else {
+            await this.handler(webRequest, webResponse);
+            if (webResponse.responsed !== true) {
+                await this.responseResource(webRequest, webResponse);
+                if (this.notFoundHandler !== undefined && (webResponse.responsed as any) !== true) {
+                    this.notFoundHandler(webRequest, webResponse);
+                }
+            }
+        }
+    }
+
     private async load() {
 
         const key = await SkyFiles.readBuffer(this.options.key);
         const cert = await SkyFiles.readBuffer(this.options.cert);
 
-        this.httpsServer = HTTPS.createServer({ key, cert }, async (req, res) => {
-
-            const webRequest = new WebRequest(req);
-            const webResponse = new WebResponse(webRequest, res);
-
-            if (webRequest.method === "OPTIONS") {
-                webResponse.response({
-                    headers: {
-                        "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
-                        "Access-Control-Allow-Origin": "*",
-                    },
-                });
-            }
-
-            else {
-                await this.handler(webRequest, webResponse);
-                if (webResponse.responsed !== true) {
-                    await this.responseResource(webRequest, webResponse);
-                    if (this.notFoundHandler !== undefined && (webResponse.responsed as any) !== true) {
-                        this.notFoundHandler(webRequest, webResponse);
-                    }
-                }
-            }
-
-        }).listen(this.options.port);
-
+        this.httpsServer = HTTPS.createServer({ key, cert }, this.serve).listen(this.options.port);
         this.httpsServer.on("error", (error) => {
             SkyLog.error(error, this.options);
         });
 
-        // http -> https redirect
-        HTTP.createServer((req, res) => {
-            res.writeHead(302, {
-                Location: `https://${req.headers.host}${this.options.port === 443 ? "" : `:${this.options.port}`}${req.url}`,
-            });
-            res.end();
-        }).listen(this.options.httpPort);
+        if (this.options.httpPort !== undefined) {
+            if (this.options.httpToHttps !== true) {
+                HTTP.createServer(this.serve).listen(this.options.httpPort);
+            } else {
+                // http -> https redirect
+                HTTP.createServer((req, res) => {
+                    res.writeHead(302, {
+                        Location: `https://${req.headers.host}${this.options.port === 443 ? "" : `:${this.options.port}`}${req.url}`,
+                    });
+                    res.end();
+                }).listen(this.options.httpPort);
+            }
+        }
 
         SkyLog.success(`web server running... https://localhost:${this.options.port}`);
     }

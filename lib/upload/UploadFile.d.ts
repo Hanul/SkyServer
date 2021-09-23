@@ -3,6 +3,6 @@ export default interface UploadFile {
     size: number;
     name: string;
     type?: string;
-    modifiedTime?: Date;
+    modifiedTime?: number;
 }
 //# sourceMappingURL=UploadFile.d.ts.map
