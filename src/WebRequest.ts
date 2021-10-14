@@ -51,10 +51,6 @@ export default class WebRequest {
             this.parameterString = "";
         }
 
-        this.uri = this.uri.substring(1);
-    }
-
-    public parseParams(): void {
         const queryParams = Querystring.parse(this.parameterString);
         for (const [name, param] of Object.entries(queryParams)) {
             if (Array.isArray(param) === true) {
@@ -63,6 +59,8 @@ export default class WebRequest {
                 this.parameters[name] = queryParams[name];
             }
         }
+
+        this.uri = this.uri.substring(1);
     }
 
     public async loadBody(): Promise<string> {

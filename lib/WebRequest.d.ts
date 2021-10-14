@@ -13,7 +13,6 @@ export default class WebRequest {
     uri: string;
     responsed: boolean;
     constructor(req: HTTP.IncomingMessage);
-    parseParams(): void;
     loadBody(): Promise<string>;
     route(pattern: string, handler: (viewParams: ViewParams) => Promise<void>): Promise<void>;
     toString: () => string;
