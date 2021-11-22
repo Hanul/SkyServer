@@ -464,6 +464,13 @@ esutils@^2.0.2:
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.3.tgz#74d2eb4de0b8da1293711910d50775b9b710ef64"
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
 
+eventcontainer@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/eventcontainer/-/eventcontainer-0.0.4.tgz#9b5fe22a51411e1cda7ed0872b11973b7d063b23"
+  integrity sha512-t4PRl3OBPvgebEx6of7rxzDwSt2HG4nwy3vfEHCkbmQOHqGgmrx2U3TsmMZAzjSnF03Ileja9BS5aiP5t0keLA==
+  dependencies:
+    skyutil "^0.0.1"
+
 fast-deep-equal@^3.1.1:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
@@ -858,12 +865,18 @@ skylog@^0.0.1:
   dependencies:
     skydate "^0.0.1"
 
-skyrouter@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/skyrouter/-/skyrouter-0.0.5.tgz#84f869e3109a841edee368b555a5ea0cbf0d5a74"
-  integrity sha512-PB7YaQAoa9mSaKQujQhbG40XatpAn4QWWk01lyAhiFzxPn9vDioawhB7N6MH5iOEXHl9QLgCQEn5sqUWvLkazA==
+skyrouter@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/skyrouter/-/skyrouter-0.0.10.tgz#31c5c4400eef42d414f0e50f3caa5bcbbf677361"
+  integrity sha512-XW2R5MEpD20oO/4cziOOIkd8CBS28nAeji7swre4UrPmaPmp/UU+roCV5PJdfOFRotXkERI70eSJOP0rFVB9iA==
   dependencies:
+    eventcontainer "^0.0.4"
     skyutil "^0.0.4"
+
+skyutil@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/skyutil/-/skyutil-0.0.1.tgz#fdd8255b2eeac3ee06e3643427e34db0ee42ab8b"
+  integrity sha512-rcbUtbwiuOJs9rvZHzVUgV1UBhOa7KxnPEmQapfhzSwUAFM2THLNZuoF/8XMFEuznRqPMeYeABo8TFiFrgBL+w==
 
 skyutil@^0.0.4:
   version "0.0.4"
