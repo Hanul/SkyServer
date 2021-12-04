@@ -2,7 +2,7 @@
     "name": "skyserver",
     "author": "Sim Young Jae",
     "homepage": "https://github.com/Hanul/skyserver",
-    "version": "0.0.15",
+    "version": "0.1.1",
     "types": "./lib/index.d.ts",
     "main": "./lib/index.js",
     "devDependencies": {
@@ -14,10 +14,12 @@
     "dependencies": {
         "@types/formidable": "^1.2.4",
         "@types/ws": "^7.4.4",
+        "eventcontainer": "^0.0.5",
         "formidable": "^1.2.2",
         "skyfiles": "^0.0.1",
         "skylog": "^0.0.1",
         "skyrouter": "^0.0.10",
-        "ws": "^7.4.6"
+        "ws": "^7.4.6",
+        "skyutil": "^0.0.8"
     }
 }

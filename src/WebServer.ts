@@ -1,3 +1,4 @@
+import EventContainer from "eventcontainer";
 import * as HTTP from "http";
 import * as HTTPS from "https";
 import * as Path from "path";
@@ -16,7 +17,7 @@ export interface WebServerOptions {
     indexFilePath?: string;
 }
 
-export default class WebServer {
+export default class WebServer extends EventContainer {
 
     public static contentTypeFromPath(path: string): string {
         const extension = Path.extname(path).substring(1);
@@ -36,6 +37,7 @@ export default class WebServer {
         private handler: (webRequest: WebRequest, webResponse: WebResponse) => Promise<void>,
         private notFoundHandler?: (webRequest: WebRequest, webResponse: WebResponse) => void,
     ) {
+        super();
         this.load();
     }
 
@@ -108,5 +110,7 @@ export default class WebServer {
         }
 
         SkyLog.success(`web server running... https://localhost:${this.options.port}`);
+
+        this.fireEvent("load");
     }
 }

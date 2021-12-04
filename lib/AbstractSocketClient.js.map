@@ -1,1 +1,1 @@
-{"version":3,"file":"AbstractSocketClient.js","sourceRoot":"","sources":["../src/AbstractSocketClient.ts"],"names":[],"mappings":";;AAAA,MAA8B,oBAAoB;CAEjD;AAFD,uCAEC"}
+{"version":3,"file":"AbstractSocketClient.js","sourceRoot":"","sources":["../src/AbstractSocketClient.ts"],"names":[],"mappings":";;;;;AAAA,oEAA4C;AAE5C,MAA8B,oBAAqB,SAAQ,wBAAc;CAExE;AAFD,uCAEC"}

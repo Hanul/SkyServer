@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import EventContainer from "eventcontainer";
 import * as HTTPS from "https";
 import WebRequest from "./WebRequest";
 import WebResponse from "./WebResponse";
@@ -9,7 +10,7 @@ export interface WebServerOptions {
     cert: string;
     indexFilePath?: string;
 }
-export default class WebServer {
+export default class WebServer extends EventContainer {
     private options;
     private handler;
     private notFoundHandler?;
