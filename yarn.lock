@@ -471,10 +471,10 @@ eventcontainer@^0.0.4:
   dependencies:
     skyutil "^0.0.1"
 
-eventcontainer@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/eventcontainer/-/eventcontainer-0.0.5.tgz#8ddb8623ce3474e9ebdcd2a60152e7cb4c837d67"
-  integrity sha512-whF2zIeGLXkgAwCt1RjxdaOx5NDKUx0opebPT2i/40EIDXLlx2QC+DtlrpJVadLGYT/cxT3nqJ8TudkO4L9pNQ==
+eventcontainer@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/eventcontainer/-/eventcontainer-0.0.6.tgz#dce77d4ccfb3ced99fce2e4df902e8a0aa6787a5"
+  integrity sha512-XRiEyjcKYzaa82TiG/cZicC4W/gDGbsduf95AMg20/zQMZGLtQlxqB7qWla0M/VXFqhNo076UvBey/r6qxp7Og==
   dependencies:
     skyutil "^0.0.1"
 

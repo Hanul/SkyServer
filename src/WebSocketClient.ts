@@ -6,6 +6,7 @@ import AbstractSocketClient from "./AbstractSocketClient";
 export default class WebSocketClient extends AbstractSocketClient {
 
     public ip: string;
+    public disconnected: boolean = false;
 
     constructor(
         private server: WebSocketServer,
@@ -45,6 +46,11 @@ export default class WebSocketClient extends AbstractSocketClient {
                     this.send(`__callback_${data.__send_key}`, result);
                 }
             }
+        });
+
+        webSocket.on("close", () => {
+            this.disconnected = true;
+            this.fireEvent("disconnect");
         });
     }
 

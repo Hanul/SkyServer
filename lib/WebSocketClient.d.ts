@@ -7,6 +7,7 @@ export default class WebSocketClient extends AbstractSocketClient {
     private server;
     private webSocket;
     ip: string;
+    disconnected: boolean;
     constructor(server: WebSocketServer, webSocket: WebSocket, nativeRequest: HTTP.IncomingMessage);
     send(method: string, ...params: any[]): void;
     broadcast(method: string, ...params: any[]): void;
