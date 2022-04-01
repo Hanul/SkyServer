@@ -33,4 +33,10 @@ export default class WebSocketServer {
 
         SkyLog.success("websocket server running...");
     }
+
+    public broadcast(method: string, ...params: any[]) {
+        for (const client of this.clients) {
+            client.send(method, ...params);
+        }
+    }
 }

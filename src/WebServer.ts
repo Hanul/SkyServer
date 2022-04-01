@@ -46,19 +46,23 @@ export default class WebServer extends EventContainer {
     }
 
     private async responseResource(webRequest: WebRequest, webResponse: WebResponse) {
-        if (webRequest.headers.range !== undefined) {
-            this.responseStream(webRequest, webResponse);
-        } else if (webRequest.method === "GET") {
-            try {
-                const contentType = WebServer.contentTypeFromPath(webRequest.uri);
-                const content = await SkyFiles.readBuffer(`${process.cwd()}/public/${webRequest.uri}`);
-                webResponse.response({ content, contentType });
-            } catch (error) {
+        if (webRequest.uri.includes("..") === true) {
+            webResponse.response({ statusCode: 500, content: "Stop Attack" });
+        } else {
+            if (webRequest.headers.range !== undefined) {
+                this.responseStream(webRequest, webResponse);
+            } else if (webRequest.method === "GET") {
                 try {
-                    const indexFileContent = await SkyFiles.readBuffer(`${process.cwd()}/public/${this.options.indexFilePath === undefined ? "index.html" : this.options.indexFilePath}`);
-                    webResponse.response({ content: indexFileContent, contentType: "text/html" });
+                    const contentType = WebServer.contentTypeFromPath(webRequest.uri);
+                    const content = await SkyFiles.readBuffer(`${process.cwd()}/public/${webRequest.uri}`);
+                    webResponse.response({ content, contentType });
                 } catch (error) {
-                    webResponse.response({ statusCode: 404 });
+                    try {
+                        const indexFileContent = await SkyFiles.readBuffer(`${process.cwd()}/public/${this.options.indexFilePath === undefined ? "index.html" : this.options.indexFilePath}`);
+                        webResponse.response({ content: indexFileContent, contentType: "text/html" });
+                    } catch (error) {
+                        webResponse.response({ statusCode: 404 });
+                    }
                 }
             }
         }
